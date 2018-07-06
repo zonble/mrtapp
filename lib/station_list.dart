@@ -7,6 +7,7 @@ class StationListPage extends StatefulWidget {
   String title;
   Map<String, mrt.MRTExit> stations;
   StreamController _didSelectController = new StreamController.broadcast();
+
   Stream get didSelect => _didSelectController.stream;
 
   @override
@@ -24,21 +25,14 @@ class _StationListPageState extends State<StationListPage> {
             itemCount: this.widget.stations.keys.length,
             itemBuilder: (BuildContext context, int index) {
               var station = this.widget.stations.keys.toList()[index];
-              return new GestureDetector(
-                  onTap: () {
-                    // print('test');
-                    this.widget._didSelectController.add(station);
-                    Navigator.pop(context);
-                  },
-                  child: new Row(children: <Widget>[
-                    new Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: new Text(
-                        station,
-                        style: new TextStyle(fontSize: 16.0),
-                      ),
-                    )
-                  ]));
+              return new ListTile(
+                title: new Text(station),
+                onTap: () {
+                  // print('test');
+                  this.widget._didSelectController.add(station);
+                  Navigator.pop(context);
+                },
+              );
             }));
   }
 }

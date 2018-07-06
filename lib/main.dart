@@ -118,29 +118,35 @@ class _HomePageState extends State<HomePage> {
           '請選擇起點',
           style: Theme.of(context).textTheme.title,
         ),
-        padding: new EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+        padding: new EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
       ),
-      new RaisedButton(
-        onPressed: () {
-          selectFrom(context);
-        },
-        color: Theme.of(context).backgroundColor,
-        child: new Text(this.from ?? '尚未選定'),
-      ),
+      new Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(20.0),
+          child: new RaisedButton(
+              onPressed: () {
+                selectFrom(context);
+              },
+              color: Theme.of(context).backgroundColor,
+              child: new Text(this.from ?? '尚未選定'))),
       new Padding(
-        child: new Text(
+        child: new Container(
+            child: new Text(
           '請選擇終點',
           style: Theme.of(context).textTheme.title,
-        ),
-        padding: new EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+        )),
+        padding: new EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
       ),
-      new RaisedButton(
-        onPressed: () {
-          selectTo(context);
-        },
-        color: Theme.of(context).backgroundColor,
-        child: new Text(this.to ?? '尚未選定'),
-      )
+      new Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.all(20.0),
+          child: new RaisedButton(
+            onPressed: () {
+              selectTo(context);
+            },
+            color: Theme.of(context).backgroundColor,
+            child: new Text(this.to ?? '尚未選定'),
+          ))
     ];
     if (this.errorMessage != null) {
       body.add(new Padding(
@@ -152,7 +158,15 @@ class _HomePageState extends State<HomePage> {
       ));
     } else if (this.shortestRoute != null && this.longestRoute != null) {
       body.add(new Padding(
-          padding: new EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
+        child: new Text(
+          '查詢結果',
+          style: Theme.of(context).textTheme.title,
+        ),
+        padding: new EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
+      ));
+      body.add(new Container(
+          width: MediaQuery.of(context).size.width,
+          padding: new EdgeInsets.all(20.0),
           child: new RaisedButton(
             onPressed: () {
               this.pushShortest(context);
@@ -160,13 +174,16 @@ class _HomePageState extends State<HomePage> {
             color: Theme.of(context).backgroundColor,
             child: new Text('顯示最短路徑'),
           )));
-      body.add(new RaisedButton(
-        onPressed: () {
-          this.pushLongest(context);
-        },
-        color: Theme.of(context).backgroundColor,
-        child: new Text('顯示最長路徑'),
-      ));
+      body.add(new Container(
+          width: MediaQuery.of(context).size.width,
+          padding: new EdgeInsets.all(20.0),
+          child: new RaisedButton(
+            onPressed: () {
+              this.pushLongest(context);
+            },
+            color: Theme.of(context).backgroundColor,
+            child: new Text('顯示最長路徑'),
+          )));
     }
 
     return new Scaffold(
@@ -174,8 +191,9 @@ class _HomePageState extends State<HomePage> {
           title: new Text(widget.title),
         ),
         body: new Center(
-          child: new Column(
-              mainAxisAlignment: MainAxisAlignment.start, children: body),
+          child: new ListView(
+            children: body,
+          ),
         ));
   }
 }
